@@ -3012,16 +3012,16 @@ def initialisesignupscreen():
 
 # the stats at a glance frame
 def initialisestatsscreen():
-
     # login screen page frame
     global statsscreenframe
 
     usercalgoal = usercaloriegoal
     usercalin = usercaloriein
-    
+
     usercalburntgoal = usercalorieburntgoal
     usercalburnt = usercalorieburnt
-    usercalburntgoal - usercalburnt = usercalprogress
+    usercaldailyprogress  = 0
+    usercaldailyprogress = usercalburntgoal-usercalburnt
 
     userfats = userfatintake
     usersugar = usersugarintake
@@ -3046,7 +3046,6 @@ def initialisestatsscreen():
                                                  corner_radius=0, fg_color="#00FFFF",
                                                  bg_color="#00FFFF")
     piechartintakeframe.place(relx=0.3, rely=0.8)
-
 
     # the back arrow frame on the all workouts frame
     statsscreenbackarrowframe = DashboardCustomTKframe(master=statsscreenframe, width=45,
@@ -3074,20 +3073,43 @@ def initialisestatsscreen():
     nutrientlabels = ['Fats', 'Protein', 'Sugar']
     nutrientdata = [userfats, usersugar, userprotein]
 
-    usercalburntlabel = ['Fats', 'Protein', 'Sugar']
-    nutrientdata = [userfats, usersugar, userprotein]
+    usercalburntlabel = ['Daily Progress', 'Daily goal']
+    usercalburntdata = [usercaldailyprogress, usercalburntgoal]
 
+    userintakelabels = ['Cals in', 'Cal Goal']
+    userintakedata = [usercalin, usercalgoal]
 
     fig = Figure()  # create a figure object
+    fig2 = Figure()  # create a figure object
+    fig3 = Figure()  # create a figure object
+    
     ax = fig.add_subplot(111)  # add an Axes to the figure
     fig.patch.set_facecolor("white")  # 00FFFF
     fig.set_figwidth(2)
     fig.set_figheight(2)
+    
+    ax2 = fig2.add_subplot(111)  # add an Axes to the figure
+    fig2.patch.set_facecolor("white")  # 00FFFF
+    fig2.set_figwidth(2)
+    fig2.set_figheight(2)
+    
+    ax3 = fig3.add_subplot(111)  # add an Axes to the figure
+    fig3.patch.set_facecolor("white")  # 00FFFF
+    fig3.set_figwidth(2)
+    fig3.set_figheight(2)
 
     ax.pie(piechartcompositionframe, radius=1, labels=nutrientlabels, autopct='%0.1f%%', shadow=True)
+    ax2.pie(piechartburntframe, radius=1, labels=nutrientlabels, autopct='%0.1f%%', shadow=True)
+    ax3.pie(piechartintakeframe, radius=1, labels=nutrientlabels, autopct='%0.1f%%', shadow=True)
 
     chart1 = FigureCanvasTkAgg(fig, framechartslt)
     chart1.get_tk_widget().pack()
+    
+    chart2 = FigureCanvasTkAgg(fig2, framechartslt2)
+    chart2.get_tk_widget().pack()
+    
+    chart3 = FigureCanvasTkAgg(fig3, framechartslt3)
+    chart3.get_tk_widget().pack()
 
 # the signup screen to set up the account
 def initialisehealthdata():
