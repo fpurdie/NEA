@@ -3016,19 +3016,37 @@ def initialisestatsscreen():
     # login screen page frame
     global statsscreenframe
 
-    userfats = 10
-    usersugar = 15
-    userprotein = 20
+    usercalgoal = usercaloriegoal
+    usercalin = usercaloriein
+    
+    usercalburntgoal = usercalorieburntgoal
+    usercalburnt = usercalorieburnt
+    usercalburntgoal - usercalburnt = usercalprogress
+
+    userfats = userfatintake
+    usersugar = usersugarintake
+    userprotein = userproteinintake
 
     statsscreenframe = DashboardCustomTKframe(master=window, width=400, height=700,
                                               corner_radius=0, fg_color="#00FFFF",
                                               bg_color="#00FFFF")
     statsscreenframe.pack()
 
-    piechartframe = DashboardCustomTKframe(master=statsscreenframe, width=400, height=700,
-                                           corner_radius=0, fg_color="#00FFFF",
-                                           bg_color="#00FFFF")
-    piechartframe.place(relx=0, rely=0.5)
+    piechartcompositionframe = DashboardCustomTKframe(master=statsscreenframe, width=400, height=700,
+                                                      corner_radius=0, fg_color="#00FFFF",
+                                                      bg_color="#00FFFF")
+    piechartcompositionframe.place(relx=0.3, rely=0.3)
+
+    piechartburntframe = DashboardCustomTKframe(master=statsscreenframe, width=400, height=700,
+                                                corner_radius=0, fg_color="#00FFFF",
+                                                bg_color="#00FFFF")
+    piechartburntframe.place(relx=0.3, rely=0.6)
+
+    piechartintakeframe = DashboardCustomTKframe(master=statsscreenframe, width=400, height=700,
+                                                 corner_radius=0, fg_color="#00FFFF",
+                                                 bg_color="#00FFFF")
+    piechartintakeframe.place(relx=0.3, rely=0.8)
+
 
     # the back arrow frame on the all workouts frame
     statsscreenbackarrowframe = DashboardCustomTKframe(master=statsscreenframe, width=45,
@@ -3044,11 +3062,21 @@ def initialisestatsscreen():
                                                    command=statsscreentodashboard)
     statsscreenbackarrow.pack()
 
-    framechartslt = tk.Frame(piechartframe)
+    framechartslt = tk.Frame(piechartcompositionframe)
     framechartslt.pack()
+
+    framechartslt2 = tk.Frame(piechartburntframe)
+    framechartslt2.pack()
+
+    framechartslt3 = tk.Frame(piechartintakeframe)
+    framechartslt3.pack()
 
     nutrientlabels = ['Fats', 'Protein', 'Sugar']
     nutrientdata = [userfats, usersugar, userprotein]
+
+    usercalburntlabel = ['Fats', 'Protein', 'Sugar']
+    nutrientdata = [userfats, usersugar, userprotein]
+
 
     fig = Figure()  # create a figure object
     ax = fig.add_subplot(111)  # add an Axes to the figure
@@ -3056,7 +3084,7 @@ def initialisestatsscreen():
     fig.set_figwidth(2)
     fig.set_figheight(2)
 
-    ax.pie(nutrientdata, radius=1, labels=nutrientlabels, autopct='%0.1f%%', shadow=True)
+    ax.pie(piechartcompositionframe, radius=1, labels=nutrientlabels, autopct='%0.1f%%', shadow=True)
 
     chart1 = FigureCanvasTkAgg(fig, framechartslt)
     chart1.get_tk_widget().pack()
@@ -3288,6 +3316,15 @@ def initialisehealthdata():
 
         #loggedinuser = SignInUser()
         #loggedinuser.sign_in(loginuser_id2)
+
+        global useridsignin
+        global userproteinintake
+        global userfatintake
+        global usersugarintake
+        global usercaloriegoal
+        global usercaloriein
+        global usercalorieburntgoal
+        global usercalorieburnt
 
         useridsignin = loggedinuser.userloggedinid
         userproteinintake = userproteinintakeentry.get()
