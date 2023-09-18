@@ -215,6 +215,10 @@ class DashboardCustomTKbutton(customtkinter.CTkButton):
 class SignInUser:
     def __init__(self):
         self.userloggedinid = 0
+        print(self.userloggedinid)
+
+    def get_id(self):
+        return self.userloggedinid
 
     def sign_in(self, idvariable):
         self.userloggedinid = idvariable
@@ -255,6 +259,12 @@ def passwordcheck(password):
 def quitprogram():
     quit()
 
+
+loggedinid = 0
+loggedinuser = SignInUser()
+loggedinuser.sign_in(loggedinid)
+
+
 # will be used to open dashboard
 def initialisedashboard():
     # hiding frames from other pages
@@ -279,7 +289,7 @@ def initialisedashboard():
                                                 fg_color="white", corner_radius=6,
                                                 command=dashboardtologin,
                                                 border_width=2, hover=True)
-    dashboardusericon.place(relx=0, rely=0)
+    #dashboardusericon.place(relx=0, rely=0)
 
     # dashboard quit program frame
     dashboardquiticonframe = DashboardCustomTKframe(master=dashboardframe, width=45, height=40,
@@ -421,9 +431,9 @@ def initialisedashboard():
 
     window.mainloop()
 
+
 # will be used to open the workouts page.
 def initialiseworkouts():
-
     # the workout window frame
     global workoutframe
     workoutframe = DashboardCustomTKframe(master=window, width=400, height=700,
@@ -552,9 +562,9 @@ def initialiseworkouts():
 
     window.mainloop()
 
+
 # will be used to open the health page.
 def initialisehealth():
-
     global healthframe
     # the frame for the health page
     healthframe = DashboardCustomTKframe(master=window, width=400, height=700,
@@ -702,9 +712,9 @@ def initialisehealth():
 
     window.mainloop()
 
+
 # the command to go to all recipes
 def initialiseallrecipes():
-
     # the frame for the all recipes page
     global allrecipesframe
     allrecipesframe = DashboardCustomTKframe(master=window, width=400, height=700,
@@ -732,7 +742,6 @@ def initialiseallrecipes():
         mainframeallrecipes.pack()
 
     def steakbowlbutton():
-
         mainframeallrecipes.pack_forget()
 
         global onerecipeframe
@@ -790,7 +799,7 @@ def initialiseallrecipes():
         # the text for the nutritional values
         onerecipetextnutriton = customtkinter.CTkLabel(master=onerecipetextnutritonframe, width=30,
                                                        height=30, text="549 Kcal\n32g protein\n"
-                                                       "10g sugars\n24g fats")
+                                                                       "10g sugars\n24g fats")
         onerecipetextnutriton.pack()
 
         # the frame for the ingredients
@@ -803,13 +812,13 @@ def initialiseallrecipes():
         # the text for the ingredients
         onerecipetextingredients = customtkinter.CTkLabel(master=onerecipetextingredientsframe, width=30,
                                                           height=30, text="1 fillet steak 250g\n"
-                                                          "1 sachet fajita seasoning\n"
-                                                          "2 tbsp olive oil\n"
-                                                          "250g Mexican-style rice pouch\n"
-                                                          "2 roasted red peppers, sliced\n"
-                                                          "1 lemon, ½ juiced, ½ cut into wedges\n"
-                                                          "½ small pack chopped parsley\n"
-                                                          "yogurt, to serve")
+                                                                          "1 sachet fajita seasoning\n"
+                                                                          "2 tbsp olive oil\n"
+                                                                          "250g Mexican-style rice pouch\n"
+                                                                          "2 roasted red peppers, sliced\n"
+                                                                          "1 lemon, ½ juiced, ½ cut into wedges\n"
+                                                                          "½ small pack chopped parsley\n"
+                                                                          "yogurt, to serve")
         onerecipetextingredients.pack()
 
         onerecipetextmethodframe = DashboardCustomTKframe(master=onerecipeframe,
@@ -820,23 +829,23 @@ def initialiseallrecipes():
 
         # the text for the ingredients
         onerecipetextmethod = customtkinter.CTkLabel(master=onerecipetextmethodframe, width=30,
-                                                     height=30, text="Step 1\nCoat the steak with half of the fajita seasoning\n"
-                                                                     "and 1 tbsp of the olive oil. Heat a frying pan\n"
-                                                                     "over a high heat and add the steak, cook for 2 mins\n"
-                                                                     "on each side for medium rare,\n"
-                                                                     "remove from the pan and set aside.\n"
-                                                                     "\nStep 2\nTurn down the heat to medium and add the remaining oil.\n"
-                                                                     "Tip in the rest of the fajita seasoning, \n"
-                                                                     "the rice and red peppers. Stir well and cook for 2 mins,\n"
-                                                                     "Add a splash of water if it starts to stick. \n"
-                                                                     "Add the lemon juice, stir through half the parsley and season.\n"
-                                                                     "\nStep 3\nCut the steak into strips. Tip the rice into bowls\n"
-                                                                     "and top each with the steak and a dollop of yogurt.\n"
-                                                                     "Scatter with parsley and serve with a lemon wedge.")
+                                                     height=30,
+                                                     text="Step 1\nCoat the steak with half of the fajita seasoning\n"
+                                                          "and 1 tbsp of the olive oil. Heat a frying pan\n"
+                                                          "over a high heat and add the steak, cook for 2 mins\n"
+                                                          "on each side for medium rare,\n"
+                                                          "remove from the pan and set aside.\n"
+                                                          "\nStep 2\nTurn down the heat to medium and add the remaining oil.\n"
+                                                          "Tip in the rest of the fajita seasoning, \n"
+                                                          "the rice and red peppers. Stir well and cook for 2 mins,\n"
+                                                          "Add a splash of water if it starts to stick. \n"
+                                                          "Add the lemon juice, stir through half the parsley and season.\n"
+                                                          "\nStep 3\nCut the steak into strips. Tip the rice into bowls\n"
+                                                          "and top each with the steak and a dollop of yogurt.\n"
+                                                          "Scatter with parsley and serve with a lemon wedge.")
         onerecipetextmethod.pack()
 
     def vegenchiladasbutton():
-
         mainframeallrecipes.pack_forget()
 
         global onerecipeframe
@@ -894,7 +903,7 @@ def initialiseallrecipes():
         # the text for the nutritional values
         onerecipetextnutriton = customtkinter.CTkLabel(master=onerecipetextnutritonframe, width=30,
                                                        height=30, text="430 Kcal\n23g protein\n"
-                                                       "17g sugars\n13g fats")
+                                                                       "17g sugars\n13g fats")
         onerecipetextnutriton.pack()
 
         # the frame for the ingredients
@@ -907,14 +916,14 @@ def initialiseallrecipes():
         # the text for the ingredients
         onerecipetextingredients = customtkinter.CTkLabel(master=onerecipetextingredientsframe, width=30,
                                                           height=30, text="1 tsp olive oil\n"
-                                                          "2 onions, chopped\n"
-                                                          "280g carrots, grated\n"
-                                                          "2-3 tsp chilli powder\n"
-                                                          "2 x 400g cans chopped tomatoes\n"
-                                                          "2 x 400g cans pulses in water\n"
-                                                          "6 small wholemeal tortillas\n"
-                                                          "200g low-fat natural yogurt\n"
-                                                          "50g extra-mature cheddar cheese")
+                                                                          "2 onions, chopped\n"
+                                                                          "280g carrots, grated\n"
+                                                                          "2-3 tsp chilli powder\n"
+                                                                          "2 x 400g cans chopped tomatoes\n"
+                                                                          "2 x 400g cans pulses in water\n"
+                                                                          "6 small wholemeal tortillas\n"
+                                                                          "200g low-fat natural yogurt\n"
+                                                                          "50g extra-mature cheddar cheese")
         onerecipetextingredients.pack()
 
         onerecipetextmethodframe = DashboardCustomTKframe(master=onerecipeframe,
@@ -931,13 +940,13 @@ def initialiseallrecipes():
                                                                      "Pour in the tomatoes and pulses and bring to the boil.\n"
                                                                      "Turn down the heat and simmer for 5-10 mins,\n"
                                                                      "stirring occasionally, until thickened.\n"
-                                                                     
+
                                                                      "\nStep 2\nHeat grill to high.\n"
                                                                      "Spread a spoonful of the bean chilli over a large ovenproof dish \n"
                                                                      "Lay each tortilla onto a board, fill with a few tbsp of chilli mixture,\n"
                                                                      "fold over the ends and roll up to seal.\n"
                                                                      "Place them into the ovenproof dish. Spoon the remaining chilli on top.\n"
-                                                                     
+
                                                                      "\nStep 3\nMix the yogurt and grated cheese together with some seasoning,\n"
                                                                      "and spoon over the enchiladas\n"
                                                                      "Grill for a few mins until the top is golden and bubbling.")
@@ -1118,18 +1127,19 @@ def initialiseallrecipes():
 
         # the text for the ingredients
         onerecipetextingredients = customtkinter.CTkLabel(master=onerecipetextingredientsframe, width=30,
-                                                          height=30, text="600g chicken breast fillets, cut into 2cm pieces\n"
-                                                                          "2tbsp cornflour\n"
-                                                                          "5tbsp plain flour\n"
-                                                                          "1tsp baking powder\n"
-                                                                          "large pinch of white pepper\n"
-                                                                          "1 egg, beaten\n"
-                                                                          "2tbsp sunflower or vegetable oil, for frying\n"
-                                                                          "2 spring onions, finely sliced, to serve\n"
-                                                                          "cooked noodles, to serve (optional)\nFor the sauce\n"
-                                                                          "2tsp cornflour, 2 unwaxed lemons, zested and juiced\n"
-                                                                          "2tbsp honey 2tbsp soy sauce, \n"
-                                                                          "2tsp sesame seeds 2tsp sesame oil"
+                                                          height=30,
+                                                          text="600g chicken breast fillets, cut into 2cm pieces\n"
+                                                               "2tbsp cornflour\n"
+                                                               "5tbsp plain flour\n"
+                                                               "1tsp baking powder\n"
+                                                               "large pinch of white pepper\n"
+                                                               "1 egg, beaten\n"
+                                                               "2tbsp sunflower or vegetable oil, for frying\n"
+                                                               "2 spring onions, finely sliced, to serve\n"
+                                                               "cooked noodles, to serve (optional)\nFor the sauce\n"
+                                                               "2tsp cornflour, 2 unwaxed lemons, zested and juiced\n"
+                                                               "2tbsp honey 2tbsp soy sauce, \n"
+                                                               "2tsp sesame seeds 2tsp sesame oil"
 
                                                           )
         onerecipetextingredients.pack()
@@ -1147,7 +1157,7 @@ def initialiseallrecipes():
                                                                      "the lemon zest and juice until any lumps disappear. \n"
                                                                      "Add the honey, soy, sesame seeds and\n"
                                                                      "sesame oil and mix again. Set aside."
-                                                                     
+
                                                                      "\nStep 2\n"
                                                                      "Combine the cornflour, flour, baking powder, ¼ tsp salt,\n"
                                                                      "the pepper, beaten egg and 4 tbsp water in a large bowl.\n"
@@ -1158,7 +1168,7 @@ def initialiseallrecipes():
                                                                      "for 6 mins per batch until golden and cooked through.\n"
                                                                      "Remove the cooked chicken and transfer to a plate \n"
                                                                      "or tray lined with kitchen paper."
-                                                                     
+
                                                                      "\nStep 3\n"
                                                                      "When all the chicken has been cooked,\n"
                                                                      "return all of it to the pan, still over a high heat, \n"
@@ -1272,7 +1282,7 @@ def initialiseallrecipes():
                                                                      "Mix everything together.\n"
                                                                      "Divide the mixture into 20 lumps,\n"
                                                                      "and roll each piece into a meatball.\n"
-                                                                     
+
                                                                      "\nStep 3 Cooking the meatballs \n"
                                                                      "Spray or run a non-stick pan with a little oil\n"
                                                                      "Cook the meatballs with oil until they start to brown.\n"
@@ -1709,9 +1719,9 @@ def initialiseallrecipes():
 
     window.mainloop()
 
+
 # will be used to open all workouts
 def initialiseallworkouts():
-
     # the frame for the all workouts page
     global allworkoutsframe
     allworkoutsframe = DashboardCustomTKframe(master=window, width=400, height=700,
@@ -1729,7 +1739,6 @@ def initialiseallworkouts():
         mainframeallworkouts.pack()
 
     def hammercurlbutton():
-
         mainframeallworkouts.pack_forget()
 
         global oneworkoutframe
@@ -1815,7 +1824,6 @@ def initialiseallworkouts():
         window.mainloop()
 
     def inclinedumbellbenchbutton():
-
         mainframeallworkouts.pack_forget()
 
         global oneworkoutframe
@@ -1903,7 +1911,6 @@ def initialiseallworkouts():
         window.mainloop()
 
     def pecflybutton():
-
         mainframeallworkouts.pack_forget()
 
         global oneworkoutframe
@@ -1991,7 +1998,6 @@ def initialiseallworkouts():
         window.mainloop()
 
     def benchpressbutton():
-
         mainframeallworkouts.pack_forget()
 
         global oneworkoutframe
@@ -2082,7 +2088,6 @@ def initialiseallworkouts():
         window.mainloop()
 
     def gobletsquatbutton():
-
         mainframeallworkouts.pack_forget()
 
         global oneworkoutframe
@@ -2175,7 +2180,6 @@ def initialiseallworkouts():
         window.mainloop()
 
     def legpressbutton():
-
         mainframeallworkouts.pack_forget()
 
         global oneworkoutframe
@@ -2263,7 +2267,6 @@ def initialiseallworkouts():
         window.mainloop()
 
     def latpulldownbutton():
-
         mainframeallworkouts.pack_forget()
 
         global oneworkoutframe
@@ -2349,7 +2352,6 @@ def initialiseallworkouts():
         window.mainloop()
 
     def pressupbutton():
-
         mainframeallworkouts.pack_forget()
 
         global oneworkoutframe
@@ -2555,9 +2557,9 @@ def initialiseallworkouts():
 
     window.mainloop()
 
+
 # the login screen to log into the account
 def initialiseloginscreen():
-
     # login screen page frame
 
     global loginscreenframe
@@ -2568,19 +2570,19 @@ def initialiseloginscreen():
 
     #######################################################################################
 
-    # the back arrow frame on the login page
-    loginbackiconframe = DashboardCustomTKframe(master=loginscreenframe, width=45, height=40,
-                                                corner_radius=10, fg_color="#00FFFF",
-                                                bg_color="#00FFFF")
-    loginbackiconframe.place(relx=0.055, rely=0.025, anchor=NW)
-
-    # the back arrow on the login page
-    loginbackicon = DashboardCustomTKbutton(master=loginbackiconframe,
-                                            width=40, height=40, image=backarrowimage,
-                                            fg_color="white", corner_radius=6,
-                                            command=logintodashboard,
-                                            border_width=2, hover=True)
-    loginbackicon.place(relx=0, rely=0)
+    ## the back arrow frame on the login page
+    #loginbackiconframe = DashboardCustomTKframe(master=loginscreenframe, width=45, height=40,
+    #                                            corner_radius=10, fg_color="#00FFFF",
+    #                                            bg_color="#00FFFF")
+    #loginbackiconframe.place(relx=0.055, rely=0.025, anchor=NW)
+    #
+    ## the back arrow on the login page
+    #loginbackicon = DashboardCustomTKbutton(master=loginbackiconframe,
+    #                                        width=40, height=40, image=backarrowimage,
+    #                                        fg_color="white", corner_radius=6,
+    #                                        command=logintodashboard,
+    #                                        border_width=2, hover=True)
+    #loginbackicon.place(relx=0, rely=0)
 
     ################################################################
 
@@ -2709,10 +2711,12 @@ def initialiseloginscreen():
                     if loginpassword2 == result[1]:
 
                         global loggedinuser
-                        loggedinuser = SignInUser()
                         loggedinuser.sign_in(loginuser_id2)
 
-                        logintext.configure(text="Logged in.")
+                        logintext.configure(text="Logged in.\n"
+                                                 "returning to dashboard")
+
+                        logintodashboard2()
 
                         return True, result[1], result[2], "Sign In Successful."
                     else:
@@ -2740,9 +2744,9 @@ def initialiseloginscreen():
 
     window.mainloop()
 
+
 # the signup screen to set up the account
 def initialisesignupscreen():
-
     # initialising frames
     # Naming convention: [the page name][description of frame/button]
 
@@ -2856,7 +2860,7 @@ def initialisesignupscreen():
             userid = cursor.lastrowid
             updatetext.configure(fg_color="White",
                                  text=" Registration successful, \n"
-                                 f" Your user id code is:  \n{userid} ")
+                                      f" Your user id code is:  \n{userid} ")
 
             # cursor.execute("""SELECT
             # dailycaloriein, dailycalorieout,
@@ -2866,6 +2870,9 @@ def initialisesignupscreen():
             # print(results)
             # print("test")
             connection.commit()
+            dataconfirmbutton.pack_forget()
+            backtomenubutton.pack()
+
 
     ####################################################################################
 
@@ -2874,10 +2881,19 @@ def initialisesignupscreen():
                                                 width=75, height=40, text="Confirm",
                                                 fg_color="White", corner_radius=8,
                                                 command=getdata,
-                                                border_width=0, hover=False, bg_color="#00FFFF")
+                                                border_width=0, hover=False,
+                                                bg_color="#00FFFF")
     dataconfirmbutton.pack()
 
-    #################################################################################
+    backtomenubutton = DashboardCustomTKbutton(master=dataconfirmframe,
+                                               width=75, height=40,
+                                               text="Back to Dashboard",
+                                               fg_color="White", corner_radius=8,
+                                               command=signuptodashboard,
+                                               border_width=0, hover=False,
+                                               bg_color="#00FFFF")
+
+    ################################################################################
 
     updatetextframe = DashboardCustomTKframe(master=signupscreenframe,
                                              width=80, height=40,
@@ -3010,6 +3026,7 @@ def initialisesignupscreen():
 
     window.mainloop()
 
+
 # the stats at a glance frame
 def initialisestatsscreen():
     # login screen page frame
@@ -3020,12 +3037,17 @@ def initialisestatsscreen():
 
     usercalburntgoal = usercalorieburntgoal
     usercalburnt = usercalorieburnt
-    usercaldailyprogress  = 0
-    usercaldailyprogress = usercalburntgoal-usercalburnt
+    usercaldailyprogress = 0
+    usercaldailyprogress = usercalburntgoal - usercalburnt
 
     userfats = userfatintake
     usersugar = usersugarintake
     userprotein = userproteinintake
+
+    cursor.execute("""SELECT dailycaloriein, dailycalorieout, dailyproteinin, dailyfatin
+    FROM health WHERE user_id = (?)""", (loggedinuser.userloggedinid,))
+    results = cursor.fetchone()
+    print(results)
 
     statsscreenframe = DashboardCustomTKframe(master=window, width=400, height=700,
                                               corner_radius=0, fg_color="#00FFFF",
@@ -3071,49 +3093,49 @@ def initialisestatsscreen():
     framechartslt3.pack()
 
     nutrientlabels = ['Fats', 'Protein', 'Sugar']
-    nutrientdata = [userfats, usersugar, userprotein]
+    nutrientdata = np.array([userfats, usersugar, userprotein])
 
     usercalburntlabel = ['Daily Progress', 'Daily goal']
-    usercalburntdata = [usercaldailyprogress, usercalburntgoal]
+    usercalburntdata = np.array([usercaldailyprogress, usercalburntgoal])
 
     userintakelabels = ['Cals in', 'Cal Goal']
-    userintakedata = [usercalin, usercalgoal]
+    userintakedata = np.array([usercalin, usercalgoal])
 
     fig = Figure()  # create a figure object
     fig2 = Figure()  # create a figure object
     fig3 = Figure()  # create a figure object
-    
+
     ax = fig.add_subplot(111)  # add an Axes to the figure
     fig.patch.set_facecolor("white")  # 00FFFF
     fig.set_figwidth(2)
     fig.set_figheight(2)
-    
+
     ax2 = fig2.add_subplot(111)  # add an Axes to the figure
     fig2.patch.set_facecolor("white")  # 00FFFF
     fig2.set_figwidth(2)
     fig2.set_figheight(2)
-    
+
     ax3 = fig3.add_subplot(111)  # add an Axes to the figure
     fig3.patch.set_facecolor("white")  # 00FFFF
     fig3.set_figwidth(2)
     fig3.set_figheight(2)
 
-    ax.pie(piechartcompositionframe, radius=1, labels=nutrientlabels, autopct='%0.1f%%', shadow=True)
-    ax2.pie(piechartburntframe, radius=1, labels=nutrientlabels, autopct='%0.1f%%', shadow=True)
-    ax3.pie(piechartintakeframe, radius=1, labels=nutrientlabels, autopct='%0.1f%%', shadow=True)
+    ax.pie(nutrientdata, radius=1, labels=nutrientlabels, autopct='%0.1f%%', shadow=True)
+    ax2.pie(usercalburntdata, radius=1, labels=usercalburntlabel, autopct='%0.1f%%', shadow=True)
+    ax3.pie(userintakedata, radius=1, labels=userintakelabels, autopct='%0.1f%%', shadow=True)
 
     chart1 = FigureCanvasTkAgg(fig, framechartslt)
     chart1.get_tk_widget().pack()
-    
+
     chart2 = FigureCanvasTkAgg(fig2, framechartslt2)
     chart2.get_tk_widget().pack()
-    
+
     chart3 = FigureCanvasTkAgg(fig3, framechartslt3)
     chart3.get_tk_widget().pack()
 
+
 # the signup screen to set up the account
 def initialisehealthdata():
-
     # login screen page frame
     global healthdataframe
 
@@ -3336,9 +3358,6 @@ def initialisehealthdata():
 
     def gethealthdata():
 
-        #loggedinuser = SignInUser()
-        #loggedinuser.sign_in(loginuser_id2)
-
         global useridsignin
         global userproteinintake
         global userfatintake
@@ -3382,16 +3401,19 @@ def initialisehealthdata():
 
     window.mainloop()
 
+
 # the commands to go from one page to the other.
 # command to go from dashboard to workout
 def dashboardtoworkout():
     dashboardframe.pack_forget()
     initialiseworkouts()
 
+
 # command to go from dashboard to health
 def dashboardtohealth():
     dashboardframe.pack_forget()
     initialisehealth()
+
 
 # command to go from dashboard to health
 def dashboardtoallrecipes():
@@ -3441,6 +3463,13 @@ def logintodashboard():
     initialisedashboard()
 
 
+# the command to go from the login to the dashboard 2
+def logintodashboard2():
+    time.sleep(2)
+    loginscreenframe.pack_forget()
+    initialisedashboard()
+
+
 # the command to go from the login to the signup screen
 def logintosignup():
     loginscreenframe.pack_forget()
@@ -3483,15 +3512,21 @@ def dashboardtostatsscreen():
     initialisestatsscreen()
 
 
-# the command to go from dashboard to all stats
+# the command to go from health to all stats
 def healthtostatsscreen():
     healthframe.pack_forget()
     initialisestatsscreen()
 
 
-# the command to go from dashboard to all stats
+# the command to go from all stats to dashboard
 def statsscreentodashboard():
     statsscreenframe.pack_forget()
+    initialisedashboard()
+
+
+# the command to go from dashboard to all stats
+def signuptodashboard():
+    signupscreenframe.pack_forget()
     initialisedashboard()
 
 
@@ -3511,5 +3546,6 @@ def healthtohealthdata():
 def healthdatatoallstats():
     healthdataframe.pack_forget()
     initialisestatsscreen()
+
 
 initialiseloginscreen()
