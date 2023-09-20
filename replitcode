@@ -1,4 +1,4 @@
-# Imports
+# Imports# Imports
 # import tkinter
 from tkinter import *
 import tkinter as tk
@@ -166,12 +166,11 @@ pushups = customtkinter.CTkImage(
     light_image=Image.open(r"imagesnea/pushups.png"),
     size=(150, 150))
 
-
 # workouts clicked / idle
 # Naming convention: [the page name][description of frame/button]
 # Classes below are created by me
 window = tk.Tk()
-connection = sqlite3.connect('C:/Users/finla/Desktop/myworkoutpal.db')
+connection = sqlite3.connect('myworkoutpal.db')
 cursor = connection.cursor()
 customtkinter.set_appearance_mode("Light")
 window.title("MyWorkoutPal")
@@ -290,6 +289,7 @@ def initialisedashboard():
                                                 fg_color="white", corner_radius=6,
                                                 command=dashboardtologin,
                                                 border_width=2, hover=True)
+    #dashboardusericon.place(relx=0, rely=0)
 
     # dashboard quit program frame
     dashboardquiticonframe = DashboardCustomTKframe(master=dashboardframe, width=45, height=40,
@@ -2568,6 +2568,22 @@ def initialiseloginscreen():
                                               bg_color="#00FFFF")
     loginscreenframe.pack()
 
+    #######################################################################################
+
+    ## the back arrow frame on the login page
+    #loginbackiconframe = DashboardCustomTKframe(master=loginscreenframe, width=45, height=40,
+    #                                            corner_radius=10, fg_color="#00FFFF",
+    #                                            bg_color="#00FFFF")
+    #loginbackiconframe.place(relx=0.055, rely=0.025, anchor=NW)
+    #
+    ## the back arrow on the login page
+    #loginbackicon = DashboardCustomTKbutton(master=loginbackiconframe,
+    #                                        width=40, height=40, image=backarrowimage,
+    #                                        fg_color="white", corner_radius=6,
+    #                                        command=logintodashboard,
+    #                                        border_width=2, hover=True)
+    #loginbackicon.place(relx=0, rely=0)
+
     ################################################################
 
     # the frame for the user id entry box
@@ -2857,6 +2873,7 @@ def initialisesignupscreen():
             dataconfirmbutton.pack_forget()
             backtomenubutton.pack()
 
+
     ####################################################################################
 
     # the button to retrieve the data
@@ -2870,9 +2887,9 @@ def initialisesignupscreen():
 
     backtomenubutton = DashboardCustomTKbutton(master=dataconfirmframe,
                                                width=75, height=40,
-                                               text="Back to Dashboard",
+                                               text="Back to Login",
                                                fg_color="White", corner_radius=8,
-                                               command=signuptodashboard,
+                                               command=signuptologin,
                                                border_width=0, hover=False,
                                                bg_color="#00FFFF")
 
@@ -3010,7 +3027,114 @@ def initialisesignupscreen():
     window.mainloop()
 
 
-# the health screen to enter data
+# the stats at a glance frame
+def initialisestatsscreen():
+    # login screen page frame
+    global statsscreenframe
+
+    usercalgoal = usercaloriegoal
+    usercalin = usercaloriein
+
+    usercalburntgoal = usercalorieburntgoal
+    usercalburnt = usercalorieburnt
+    usercaldailyprogress = 0
+    usercaldailyprogress = usercalburntgoal - usercalburnt
+
+    userfats = userfatintake
+    usersugar = usersugarintake
+    userprotein = userproteinintake
+
+    cursor.execute("""SELECT dailycaloriein, dailycalorieout, dailyproteinin, dailyfatin
+    FROM health WHERE user_id = (?)""", (loggedinuser.userloggedinid,))
+    results = cursor.fetchone()
+    print(results)
+
+    statsscreenframe = DashboardCustomTKframe(master=window, width=400, height=700,
+                                              corner_radius=0, fg_color="#00FFFF",
+                                              bg_color="#00FFFF")
+    statsscreenframe.pack()
+
+    piechartcompositionframe = DashboardCustomTKframe(master=statsscreenframe, width=400, height=700,
+                                                      corner_radius=0, fg_color="#00FFFF",
+                                                      bg_color="#00FFFF")
+    piechartcompositionframe.place(relx=0.3, rely=0.3)
+
+    piechartburntframe = DashboardCustomTKframe(master=statsscreenframe, width=400, height=700,
+                                                corner_radius=0, fg_color="#00FFFF",
+                                                bg_color="#00FFFF")
+    piechartburntframe.place(relx=0.3, rely=0.6)
+
+    piechartintakeframe = DashboardCustomTKframe(master=statsscreenframe, width=400, height=700,
+                                                 corner_radius=0, fg_color="#00FFFF",
+                                                 bg_color="#00FFFF")
+    piechartintakeframe.place(relx=0.3, rely=0.8)
+
+    # the back arrow frame on the all workouts frame
+    statsscreenbackarrowframe = DashboardCustomTKframe(master=statsscreenframe, width=45,
+                                                       height=45, corner_radius=10,
+                                                       fg_color="#00FFFF",
+                                                       bg_color="#00FFFF")
+    statsscreenbackarrowframe.place(relx=0.05, rely=0.005)
+
+    # the back arrow on the all workouts frame
+    statsscreenbackarrow = DashboardCustomTKbutton(master=statsscreenbackarrowframe,
+                                                   width=40, height=40,
+                                                   image=backarrowimage,
+                                                   command=statsscreentodashboard)
+    statsscreenbackarrow.pack()
+
+    framechartslt = tk.Frame(piechartcompositionframe)
+    framechartslt.pack()
+
+    framechartslt2 = tk.Frame(piechartburntframe)
+    framechartslt2.pack()
+
+    framechartslt3 = tk.Frame(piechartintakeframe)
+    framechartslt3.pack()
+
+    nutrientlabels = ['Fats', 'Protein', 'Sugar']
+    nutrientdata = np.array([userfats, usersugar, userprotein])
+
+    usercalburntlabel = ['Daily Progress', 'Daily goal']
+    usercalburntdata = np.array([usercaldailyprogress, usercalburntgoal])
+
+    userintakelabels = ['Cals in', 'Cal Goal']
+    userintakedata = np.array([usercalin, usercalgoal])
+
+    fig = Figure()  # create a figure object
+    fig2 = Figure()  # create a figure object
+    fig3 = Figure()  # create a figure object
+
+    ax = fig.add_subplot(111)  # add an Axes to the figure
+    fig.patch.set_facecolor("white")  # 00FFFF
+    fig.set_figwidth(2)
+    fig.set_figheight(2)
+
+    ax2 = fig2.add_subplot(111)  # add an Axes to the figure
+    fig2.patch.set_facecolor("white")  # 00FFFF
+    fig2.set_figwidth(2)
+    fig2.set_figheight(2)
+
+    ax3 = fig3.add_subplot(111)  # add an Axes to the figure
+    fig3.patch.set_facecolor("white")  # 00FFFF
+    fig3.set_figwidth(2)
+    fig3.set_figheight(2)
+
+    ax.pie(nutrientdata, radius=1, labels=nutrientlabels, autopct='%0.1f%%', shadow=True)
+    ax2.pie(usercalburntdata, radius=1, labels=usercalburntlabel, autopct='%0.1f%%', shadow=True)
+    ax3.pie(userintakedata, radius=1, labels=userintakelabels, autopct='%0.1f%%', shadow=True)
+
+    chart1 = FigureCanvasTkAgg(fig, framechartslt)
+    chart1.get_tk_widget().pack()
+
+    chart2 = FigureCanvasTkAgg(fig2, framechartslt2)
+    chart2.get_tk_widget().pack()
+
+    chart3 = FigureCanvasTkAgg(fig3, framechartslt3)
+    chart3.get_tk_widget().pack()
+
+
+# the signup screen to set up the account
 def initialisehealthdata():
     # login screen page frame
     global healthdataframe
@@ -3143,20 +3267,6 @@ def initialisehealthdata():
                                                                     "intake")
     dailycalorieintaketext.pack()
 
-    # the frame for the user daily calorie intake
-    warningtextframe = DashboardCustomTKframe(master=healthdataframe,
-                                              width=20, height=40,
-                                              corner_radius=10, fg_color="White",
-                                              bg_color="#00FFFF")
-    warningtextframe.place(relx=0.4, rely=0.85)
-
-    # the text for the user daily calorie intake
-    warningtext = customtkinter.CTkLabel(master=warningtextframe, width=30,
-                                         height=30, text="Warning:\n"                
-                                                         "health data is reset\n"
-                                                         "on entry")
-    warningtext.pack()
-
     ########
 
     # the frame for user daily calorie target
@@ -3244,7 +3354,7 @@ def initialisehealthdata():
     healthdataconfirmframe = DashboardCustomTKframe(master=healthdataframe, width=100, height=50,
                                                     corner_radius=10, fg_color="#00FFFF",
                                                     bg_color="#00FFFF")
-    healthdataconfirmframe.place(relx=0.4, rely=0.93)
+    healthdataconfirmframe.place(relx=0.4, rely=0.9)
 
     def gethealthdata():
 
@@ -3257,15 +3367,6 @@ def initialisehealthdata():
         global usercalorieburntgoal
         global usercalorieburnt
 
-        useridsignin = 1
-        userproteinintake = 1
-        userfatintake = 1
-        usersugarintake = 1
-        usercaloriegoal = 1
-        usercaloriein = 1
-        usercalorieburntgoal = 1
-        usercalorieburnt = 1
-
         useridsignin = loggedinuser.userloggedinid
         userproteinintake = userproteinintakeentry.get()
         userfatintake = userfatintakeentry.get()
@@ -3274,8 +3375,6 @@ def initialisehealthdata():
         usercaloriein = usercalorieintakeentry.get()
         usercalorieburntgoal = usercalorieburntgoalentry.get()
         usercalorieburnt = usercalorieburntentry.get()
-
-        cursor.execute("""DELETE FROM health WHERE user_id = ?;""", (useridsignin,))
 
         addhealthdata = """INSERT INTO health
                         (user_id, dailycaloriein, dailycaloriegoal, dailyproteinin,
@@ -3291,10 +3390,6 @@ def initialisehealthdata():
                                                                                     usercalorieburnt)
         cursor.execute(addhealthdata)
         connection.commit()
-        healthdataconfirmbutton.pack_forget()
-        warningtext.configure(text="Data saved.\n"
-                                   "Return to stats")
-        healthdatagotostatsbutton.pack()
 
     # the button to retrieve the health data
     healthdataconfirmbutton = DashboardCustomTKbutton(master=healthdataconfirmframe,
@@ -3304,150 +3399,7 @@ def initialisehealthdata():
                                                       hover=False, bg_color="#00FFFF")
     healthdataconfirmbutton.pack()
 
-    # the button to go to health data go to stats
-    healthdatagotostatsbutton = DashboardCustomTKbutton(master=healthdataconfirmframe,
-                                                        width=75, height=40, text="Back to stats",
-                                                        fg_color="White", corner_radius=8,
-                                                        command=healthinputtostats, border_width=0,
-                                                        hover=False, bg_color="#00FFFF")
-
     window.mainloop()
-
-
-# the stats at a glance frame
-def initialisestatsscreen():
-
-    # login screen page frame
-    global statsscreenframe
-
-    def getdailyfatin(dataid):
-        cursor.execute("SELECT dailyfatin FROM health WHERE user_id = ?", (dataid,))
-        results = cursor.fetchone()
-        return results[0]
-
-    def getdailysugarin(dataid):
-        cursor.execute("SELECT dailysugarin FROM health WHERE user_id = ?", (dataid,))
-        results = cursor.fetchone()
-        return results[0]
-
-    def getdailyproteinin(dataid):
-        cursor.execute("SELECT dailyproteinin FROM health WHERE user_id = ?", (dataid,))
-        results = cursor.fetchone()
-        return results[0]
-
-    def getdailycaloriegoal(dataid):
-        cursor.execute("SELECT dailycaloriegoal FROM health WHERE user_id = ?", (dataid,))
-        results = cursor.fetchone()
-        return results[0]
-
-    def getdailycaloriein(dataid):
-        cursor.execute("SELECT dailycaloriein FROM health WHERE user_id = ?", (dataid,))
-        results = cursor.fetchone()
-        return results[0]
-
-    def getdailycalorieburntgoal(dataid):
-        cursor.execute("SELECT dailycalorieburntgoal FROM health WHERE user_id = ?", (dataid,))
-        results = cursor.fetchone()
-        return results[0]
-
-    def getdailycalorieburnt(dataid):
-        cursor.execute("SELECT dailycalorieburnt FROM health WHERE user_id = ?", (dataid,))
-        results = cursor.fetchone()
-        return results[0]
-
-    userdataid = loggedinuser.get_id()
-
-    userfats = getdailyfatin(userdataid)
-    usersugar = getdailysugarin(userdataid)
-    userprotein = getdailyproteinin(userdataid)
-    usercaldailyprogress = getdailycalorieburnt(userdataid)
-    usercalburntgoal = getdailycalorieburntgoal(userdataid)
-    usercalin = getdailycaloriein(userdataid)
-    usercalgoal = getdailycaloriegoal(userdataid)
-
-    statsscreenframe = DashboardCustomTKframe(master=window, width=400, height=700,
-                                              corner_radius=0, fg_color="#00FFFF",
-                                              bg_color="#00FFFF")
-    statsscreenframe.pack()
-
-    piechartcompositionframe = DashboardCustomTKframe(master=statsscreenframe, width=400, height=700,
-                                                      corner_radius=0, fg_color="#00FFFF",
-                                                      bg_color="#00FFFF")
-    piechartcompositionframe.place(relx=0.15, rely=0.1)
-
-    piechartburntframe = DashboardCustomTKframe(master=statsscreenframe, width=400, height=700,
-                                                corner_radius=0, fg_color="#00FFFF",
-                                                bg_color="#00FFFF")
-    piechartburntframe.place(relx=0.3, rely=0.4)
-
-    piechartintakeframe = DashboardCustomTKframe(master=statsscreenframe, width=400, height=700,
-                                                 corner_radius=0, fg_color="#00FFFF",
-                                                 bg_color="#00FFFF")
-    piechartintakeframe.place(relx=0.3, rely=0.7)
-
-    # the back arrow frame on the all workouts frame
-    statsscreenbackarrowframe = DashboardCustomTKframe(master=statsscreenframe, width=45,
-                                                       height=45, corner_radius=10,
-                                                       fg_color="#00FFFF",
-                                                       bg_color="#00FFFF")
-    statsscreenbackarrowframe.place(relx=0.05, rely=0.005)
-
-    # the back arrow on the all workouts frame
-    statsscreenbackarrow = DashboardCustomTKbutton(master=statsscreenbackarrowframe,
-                                                   width=40, height=40,
-                                                   image=backarrowimage,
-                                                   command=statsscreentodashboard)
-    statsscreenbackarrow.pack()
-
-    framechartslt = tk.Frame(piechartcompositionframe)
-    framechartslt.pack()
-
-    framechartslt2 = tk.Frame(piechartburntframe)
-    framechartslt2.pack()
-
-    framechartslt3 = tk.Frame(piechartintakeframe)
-    framechartslt3.pack()
-
-    nutrientlabels = ['Fats', 'Protein', 'Sugar']
-    nutrientdata = np.array([userfats, usersugar, userprotein])
-
-    usercalburntlabel = ['Daily Progress', 'Daily goal']
-    usercalburntdata = np.array([usercaldailyprogress, usercalburntgoal])
-
-    userintakelabels = ['Cals in', 'Cal Goal']
-    userintakedata = np.array([usercalin, usercalgoal])
-
-    fig = Figure()  # create a figure object
-    fig2 = Figure()  # create a figure object
-    fig3 = Figure()  # create a figure object
-
-    ax = fig.add_subplot(111)  # add an Axes to the figure
-    fig.patch.set_facecolor("#00FFFF")  # 00FFFF
-    fig.set_figwidth(3)
-    fig.set_figheight(2)
-
-    ax2 = fig2.add_subplot(111)  # add an Axes to the figure
-    fig2.patch.set_facecolor("#00FFFF")  # 00FFFF
-    fig2.set_figwidth(2)
-    fig2.set_figheight(2)
-
-    ax3 = fig3.add_subplot(111)  # add an Axes to the figure
-    fig3.patch.set_facecolor("#00FFFF")  # 00FFFF
-    fig3.set_figwidth(2)
-    fig3.set_figheight(2)
-
-    ax.pie(nutrientdata, radius=1, labels=nutrientlabels, autopct='%0.1f%%', shadow=True)
-    ax2.pie(usercalburntdata, radius=1, labels=usercalburntlabel, autopct='%0.1f%%', shadow=True)
-    ax3.pie(userintakedata, radius=1, labels=userintakelabels, autopct='%0.1f%%', shadow=True)
-
-    chart1 = FigureCanvasTkAgg(fig, framechartslt)
-    chart1.get_tk_widget().pack()
-
-    chart2 = FigureCanvasTkAgg(fig2, framechartslt2)
-    chart2.get_tk_widget().pack()
-
-    chart3 = FigureCanvasTkAgg(fig3, framechartslt3)
-    chart3.get_tk_widget().pack()
 
 
 # the commands to go from one page to the other.
@@ -3576,12 +3528,6 @@ def statsscreentodashboard():
 def signuptodashboard():
     signupscreenframe.pack_forget()
     initialisedashboard()
-
-
-# the command to go from input health stats to view stats
-def healthinputtostats():
-    healthdataframe.pack_forget()
-    statsscreenframe.pack()
 
 
 # the command to go from workout to input daily stats
